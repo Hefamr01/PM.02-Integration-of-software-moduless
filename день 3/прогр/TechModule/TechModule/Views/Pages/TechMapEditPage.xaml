@@ -1,0 +1,106 @@
+﻿<!--  Views/Pages/TechMapEditPage.xaml  -->
+<Page
+    x:Class="TechModule.Views.Pages.TechMapEditPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Редактирование техкарты">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Margin="0,0,0,10" Header="Параметры техкарты">
+            <StackPanel>
+                <TextBlock Text="ID продукта:" />
+                <TextBox Text="{Binding Map.product_id}" />
+                <TextBlock Text="Версия:" />
+                <TextBox Text="{Binding Map.version}" />
+                <TextBlock Text="Статус:" />
+                <TextBox IsReadOnly="True" Text="{Binding Map.status}" />
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Row="1"
+            Margin="0,0,0,10"
+            Header="Шаги техкарты">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <DataGrid
+                    Grid.Column="0"
+                    AutoGenerateColumns="True"
+                    ItemsSource="{Binding Steps}"
+                    SelectedItem="{Binding SelectedStep}" />
+                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                    <Button
+                        Width="100"
+                        Margin="0,5"
+                        Command="{Binding AddStepCommand}"
+                        Content="Добавить" />
+                    <Button
+                        Width="100"
+                        Margin="0,5"
+                        Command="{Binding EditStepCommand}"
+                        Content="Изменить" />
+                    <Button
+                        Width="100"
+                        Margin="0,5"
+                        Command="{Binding RemoveStepCommand}"
+                        Content="Удалить" />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Header="Добавить/изменить шаг">
+            <StackPanel>
+                <TextBlock Text="Порядок:" />
+                <TextBox Text="{Binding StepOrder}" />
+                <TextBlock Text="Название:" />
+                <TextBox Text="{Binding StepName}" />
+                <TextBlock Text="Тип:" />
+                <TextBox Text="{Binding StepType}" />
+                <TextBlock Text="Температура (°C):" />
+                <TextBox Text="{Binding PlannedTemp}" />
+                <TextBlock Text="Давление (бар):" />
+                <TextBox Text="{Binding PlannedPressure}" />
+                <TextBlock Text="Длительность (мин):" />
+                <TextBox Text="{Binding PlannedDuration}" />
+                <CheckBox Content="Обязательный" IsChecked="{Binding IsMandatory}" />
+                <TextBlock Text="Инструкция:" />
+                <TextBox
+                    Height="60"
+                    Text="{Binding Instruction}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel
+            Grid.Row="3"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Width="100"
+                Margin="5"
+                Command="{Binding SaveCommand}"
+                Content="Сохранить" />
+            <Button
+                Width="100"
+                Margin="5"
+                Click="Cancel_Click"
+                Content="Отмена" />
+        </StackPanel>
+        <TextBlock
+            Grid.Row="3"
+            Margin="5"
+            VerticalAlignment="Center"
+            Foreground="Red"
+            Text="{Binding Error}" />
+    </Grid>
+</Page>

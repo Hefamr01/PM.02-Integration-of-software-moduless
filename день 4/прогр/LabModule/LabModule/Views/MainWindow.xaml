@@ -1,0 +1,20 @@
+﻿<Window x:Class="LabModule.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Лабораторный модуль" Width="1000" Height="700">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Background="#f0f0f0">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="RawMaterialBatches"
+                    Content="Партии сырья" />
+            <Button Command="{Binding NavigateCommand}" CommandParameter="BatchesQuality"
+                    Content="Контроль готовой продукции" />
+        </StackPanel>
+
+        <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden" />
+    </Grid>
+</Window>

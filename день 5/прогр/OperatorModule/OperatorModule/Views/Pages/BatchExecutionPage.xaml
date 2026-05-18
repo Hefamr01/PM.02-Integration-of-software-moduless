@@ -1,0 +1,83 @@
+﻿<Page x:Class="OperatorModule.Views.Pages.BatchExecutionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Выполнение партии">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Информация о партии -->
+        <Border Background="LightBlue" Padding="10" Margin="0,0,0,10">
+            <TextBlock Text="{Binding Batch.batch_number, StringFormat='Партия: {0}'}" FontSize="16" FontWeight="Bold" />
+        </Border>
+
+        <!-- Список шагов и детали текущего шага -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <ListBox ItemsSource="{Binding Steps}" DisplayMemberPath="step_name"
+                     SelectedItem="{Binding CurrentStep}" Margin="0,0,10,0" />
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Padding="10">
+                <StackPanel>
+                    <TextBlock Text="{Binding CurrentStep.step_name, StringFormat='Шаг: {0}'}" FontWeight="Bold" FontSize="14" />
+                    <Separator Margin="0,5" />
+                    <TextBlock Text="Плановые параметры:" FontWeight="Bold" />
+                    <TextBlock Text="{Binding CurrentStep.planned_temp_c, StringFormat='Температура: {0}°C'}" />
+                    <TextBlock Text="{Binding CurrentStep.planned_pressure_bar, StringFormat='Давление: {0} бар'}" />
+                    <TextBlock Text="{Binding CurrentStep.planned_duration_min, StringFormat='Длительность: {0} мин'}" />
+
+                    <Separator Margin="0,10" />
+                    <TextBlock Text="Фактические данные:" FontWeight="Bold" />
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Температура:" Width="100" />
+                        <TextBox x:Name="TempTextBox" 
+                                 Text="{Binding ActualTemp, UpdateSourceTrigger=PropertyChanged}" 
+                                 Width="100"
+                                 PreviewTextInput="OnPreviewTextInput"
+                                 DataObject.Pasting="OnPasting"
+                                 MaxLength="10" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Давление:" Width="100" />
+                        <TextBox x:Name="PressureTextBox" 
+                                 Text="{Binding ActualPressure, UpdateSourceTrigger=PropertyChanged}" 
+                                 Width="100"
+                                 PreviewTextInput="OnPreviewTextInput"
+                                 DataObject.Pasting="OnPasting"
+                                 MaxLength="10" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Длительность (мин):" Width="100" />
+                        <TextBox x:Name="DurationTextBox" 
+                                 Text="{Binding ActualDuration, UpdateSourceTrigger=PropertyChanged}" 
+                                 Width="100"
+                                 PreviewTextInput="OnPreviewIntegerTextInput"
+                                 DataObject.Pasting="OnPastingInteger"
+                                 MaxLength="6" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                        <TextBlock Text="Комментарий:" Width="100" />
+                        <TextBox Text="{Binding OperatorComment, UpdateSourceTrigger=PropertyChanged}" Width="200" MaxLength="500" />
+                    </StackPanel>
+
+                    <Separator Margin="0,10" />
+                    <TextBlock Text="Телеметрия в реальном времени:" FontWeight="Bold" />
+                    <TextBlock Text="{Binding TelemetryTemp, StringFormat='Текущая температура: {0:F1}°C'}" Foreground="Red" />
+                    <TextBlock Text="{Binding TelemetryPressure, StringFormat='Текущее давление: {0:F2} бар'}" Foreground="Red" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,10,0,0">
+            <Button Width="140" Margin="5" Command="{Binding StartStepCommand}" Content="Начать шаг" />
+            <Button Width="140" Margin="5" Command="{Binding FinishStepCommand}" Content="Завершить шаг" />
+            <Button Width="140" Margin="5" Command="{Binding CompleteBatchCommand}" Content="Завершить партию" />
+        </StackPanel>
+    </Grid>
+</Page>

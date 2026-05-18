@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "dd9c596e-8b63-48e8-9ffb-37e5908b5617",
+		"name": "asp api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50802475",
+		"_collection_link": "https://rissc446-1303808.postman.co/workspace/%25D1%2580%25D0%25B8%25D1%2581%25D1%2581%25D0%25BA%25D0%25B8%25D1%2581%25D1%258B's-Workspace~2fa04c30-655f-44e4-855b-58fdf154fc68/collection/50802475-dd9c596e-8b63-48e8-9ffb-37e5908b5617?action=share&source=collection_link&creator=50802475"
+	},
+	"item": [
+		{
+			"name": "Логин",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"tech1\",\r\n  \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:53383/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET продукты",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:53383/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST продукты",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Гербицид X\",\r\n  \"code\": \"HB-001\",\r\n  \"status\": \"active\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:53383/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Рецепты",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:53383/api/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Активация тех карты",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:53383/api/tech-maps/1/activate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"tech-maps",
+						"1",
+						"activate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Закончить комплект шагов",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 1,\r\n  \"actual_temp_c\": 82,\r\n  \"actual_pressure_bar\": 1.5,\r\n  \"actual_duration_min\": 15,\r\n  \"operator_comment\": \"Все нормально\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:53383/api/batch-steps/1/finish",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"batch-steps",
+						"1",
+						"finish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Результат контроля качества",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"analyst_id\": 2,\r\n  \"decision\": \"approved\",\r\n  \"analyst_comment\": \"Партия соответствует норме\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:53383/api/quality-controls/1/decision",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"quality-controls",
+						"1",
+						"decision"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Регистрация",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"tech1\",\r\n  \"password\": \"123\",\r\n  \"full_name\": \"Иван Технолог\",\r\n  \"role_id\": 1,\r\n  \"email\": \"tech@test.com\",\r\n  \"phone\": \"123456\",\r\n  \"department_id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:53383/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dashboard",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:53383/api/dashboard/summary",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "53383",
+					"path": [
+						"api",
+						"dashboard",
+						"summary"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

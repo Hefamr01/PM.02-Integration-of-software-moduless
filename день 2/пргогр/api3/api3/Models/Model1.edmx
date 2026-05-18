@@ -1,0 +1,1421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PM20_2Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="audit_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="table_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="record_id" Type="int" Nullable="false" />
+          <Property Name="action" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="old_value" Type="nvarchar(max)" />
+          <Property Name="new_value" Type="nvarchar(max)" />
+          <Property Name="changed_by" Type="int" />
+          <Property Name="changed_at" Type="datetime2" Precision="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="batch_steps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="batch_id" Type="int" Nullable="false" />
+          <Property Name="step_order" Type="int" Nullable="false" />
+          <Property Name="step_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="planned_temp_c" Type="decimal" Precision="5" Scale="1" />
+          <Property Name="actual_temp_c" Type="decimal" Precision="5" Scale="1" />
+          <Property Name="planned_duration_min" Type="int" />
+          <Property Name="actual_duration_min" Type="int" />
+          <Property Name="planned_pressure_bar" Type="decimal" Precision="4" Scale="1" />
+          <Property Name="actual_pressure_bar" Type="decimal" Precision="4" Scale="1" />
+          <Property Name="started_by" Type="int" />
+          <Property Name="completed_by" Type="int" />
+          <Property Name="started_at" Type="datetime2" Precision="3" />
+          <Property Name="completed_at" Type="datetime2" Precision="3" />
+          <Property Name="deviation_flag" Type="bit" Nullable="false" />
+          <Property Name="operator_comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="batches">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="batch_number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="recipe_id" Type="int" Nullable="false" />
+          <Property Name="tech_map_id" Type="int" Nullable="false" />
+          <Property Name="start_time" Type="datetime2" Precision="3" />
+          <Property Name="end_time" Type="datetime2" Precision="3" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="actual_quantity_kg" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="departments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="production_orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="recipe_id" Type="int" Nullable="false" />
+          <Property Name="planned_quantity_kg" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="planned_start_date" Type="date" />
+          <Property Name="created_by" Type="int" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="form" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="quality_controls">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="batch_id" Type="int" />
+          <Property Name="raw_material_batch_id" Type="int" />
+          <Property Name="analysis_date" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="sample_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="parameter_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="measured_value" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="standard_value" Type="nvarchar" MaxLength="50" />
+          <Property Name="unit" Type="nvarchar" MaxLength="20" />
+          <Property Name="result" Type="nvarchar" MaxLength="20" />
+          <Property Name="decision" Type="nvarchar" MaxLength="20" />
+          <Property Name="analyst_id" Type="int" />
+          <Property Name="analyst_comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="raw_material_batches">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="raw_material_id" Type="int" Nullable="false" />
+          <Property Name="batch_number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="supplier" Type="nvarchar" MaxLength="100" />
+          <Property Name="received_date" Type="date" Nullable="false" />
+          <Property Name="quantity" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="unit" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="raw_materials">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="unit" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="category" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="recipe_components">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="recipe_id" Type="int" Nullable="false" />
+          <Property Name="raw_material_id" Type="int" Nullable="false" />
+          <Property Name="percentage" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="load_order" Type="int" Nullable="false" />
+          <Property Name="tolerance_min" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="tolerance_max" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="recipes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="version" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="created_at" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="approved_at" Type="datetime2" Precision="3" />
+          <Property Name="created_by" Type="int" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tech_map_steps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tech_map_id" Type="int" Nullable="false" />
+          <Property Name="step_order" Type="int" Nullable="false" />
+          <Property Name="step_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="step_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="planned_temp_c" Type="decimal" Precision="5" Scale="1" />
+          <Property Name="planned_pressure_bar" Type="decimal" Precision="4" Scale="1" />
+          <Property Name="planned_duration_min" Type="int" />
+          <Property Name="is_mandatory" Type="bit" Nullable="false" />
+          <Property Name="instruction" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tech_maps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="version" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="created_at" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="created_by" Type="int" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="last_login" Type="datetime2" Precision="3" />
+          <Property Name="created_at" Type="datetime2" Precision="3" Nullable="false" />
+          <Property Name="department_id" Type="int" />
+        </EntityType>
+        <Association Name="FK__audit_log__chang__5DEAEAF5">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="audit_log" Type="Self.audit_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="audit_log">
+              <PropertyRef Name="changed_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batch_ste__batch__48EFCE0F">
+          <End Role="batches" Type="Self.batches" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="batch_steps" Type="Self.batch_steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="batches">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batch_steps">
+              <PropertyRef Name="batch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batch_ste__compl__4AD81681">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="batch_steps" Type="Self.batch_steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batch_steps">
+              <PropertyRef Name="completed_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batch_ste__start__49E3F248">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="batch_steps" Type="Self.batch_steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batch_steps">
+              <PropertyRef Name="started_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batches__order_i__414EAC47">
+          <End Role="production_orders" Type="Self.production_orders" Multiplicity="1" />
+          <End Role="batches" Type="Self.batches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="production_orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batches">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batches__recipe___4242D080">
+          <End Role="recipes" Type="Self.recipes" Multiplicity="1" />
+          <End Role="batches" Type="Self.batches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batches">
+              <PropertyRef Name="recipe_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batches__tech_ma__4336F4B9">
+          <End Role="tech_maps" Type="Self.tech_maps" Multiplicity="1" />
+          <End Role="batches" Type="Self.batches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tech_maps">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batches">
+              <PropertyRef Name="tech_map_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productio__creat__3D7E1B63">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="production_orders" Type="Self.production_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="production_orders">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productio__recip__39AD8A7F">
+          <End Role="recipes" Type="Self.recipes" Multiplicity="1" />
+          <End Role="production_orders" Type="Self.production_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="production_orders">
+              <PropertyRef Name="recipe_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__quality_c__analy__5B0E7E4A">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="quality_controls" Type="Self.quality_controls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quality_controls">
+              <PropertyRef Name="analyst_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__quality_c__batch__5649C92D">
+          <End Role="batches" Type="Self.batches" Multiplicity="0..1" />
+          <End Role="quality_controls" Type="Self.quality_controls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="batches">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quality_controls">
+              <PropertyRef Name="batch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__quality_c__raw_m__573DED66">
+          <End Role="raw_material_batches" Type="Self.raw_material_batches" Multiplicity="0..1" />
+          <End Role="quality_controls" Type="Self.quality_controls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="raw_material_batches">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quality_controls">
+              <PropertyRef Name="raw_material_batch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__raw_mater__raw_m__4F9CCB9E">
+          <End Role="raw_materials" Type="Self.raw_materials" Multiplicity="1" />
+          <End Role="raw_material_batches" Type="Self.raw_material_batches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="raw_materials">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="raw_material_batches">
+              <PropertyRef Name="raw_material_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recipe_co__raw_m__269AB60B">
+          <End Role="raw_materials" Type="Self.raw_materials" Multiplicity="1" />
+          <End Role="recipe_components" Type="Self.recipe_components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="raw_materials">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recipe_components">
+              <PropertyRef Name="raw_material_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recipe_co__recip__25A691D2">
+          <End Role="recipes" Type="Self.recipes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="recipe_components" Type="Self.recipe_components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recipe_components">
+              <PropertyRef Name="recipe_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recipes__created__22CA2527">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="recipes" Type="Self.recipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recipes">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recipes__product__1EF99443">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="recipes" Type="Self.recipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recipes">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tech_map___tech___34E8D562">
+          <End Role="tech_maps" Type="Self.tech_maps" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tech_map_steps" Type="Self.tech_map_steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tech_maps">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tech_map_steps">
+              <PropertyRef Name="tech_map_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tech_maps__creat__320C68B7">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="tech_maps" Type="Self.tech_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tech_maps">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tech_maps__produ__2E3BD7D3">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="tech_maps" Type="Self.tech_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tech_maps">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__departmen__147C05D0">
+          <End Role="departments" Type="Self.departments" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departments">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__role_id__119F9925">
+          <End Role="roles" Type="Self.roles" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PM20_2ModelContainer">
+          <EntitySet Name="audit_log" EntityType="Self.audit_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="batch_steps" EntityType="Self.batch_steps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="batches" EntityType="Self.batches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="departments" EntityType="Self.departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="production_orders" EntityType="Self.production_orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="quality_controls" EntityType="Self.quality_controls" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="raw_material_batches" EntityType="Self.raw_material_batches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="raw_materials" EntityType="Self.raw_materials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recipe_components" EntityType="Self.recipe_components" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recipes" EntityType="Self.recipes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tech_map_steps" EntityType="Self.tech_map_steps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tech_maps" EntityType="Self.tech_maps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__audit_log__chang__5DEAEAF5" Association="Self.FK__audit_log__chang__5DEAEAF5">
+            <End Role="users" EntitySet="users" />
+            <End Role="audit_log" EntitySet="audit_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batch_ste__batch__48EFCE0F" Association="Self.FK__batch_ste__batch__48EFCE0F">
+            <End Role="batches" EntitySet="batches" />
+            <End Role="batch_steps" EntitySet="batch_steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batch_ste__compl__4AD81681" Association="Self.FK__batch_ste__compl__4AD81681">
+            <End Role="users" EntitySet="users" />
+            <End Role="batch_steps" EntitySet="batch_steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batch_ste__start__49E3F248" Association="Self.FK__batch_ste__start__49E3F248">
+            <End Role="users" EntitySet="users" />
+            <End Role="batch_steps" EntitySet="batch_steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batches__order_i__414EAC47" Association="Self.FK__batches__order_i__414EAC47">
+            <End Role="production_orders" EntitySet="production_orders" />
+            <End Role="batches" EntitySet="batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batches__recipe___4242D080" Association="Self.FK__batches__recipe___4242D080">
+            <End Role="recipes" EntitySet="recipes" />
+            <End Role="batches" EntitySet="batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batches__tech_ma__4336F4B9" Association="Self.FK__batches__tech_ma__4336F4B9">
+            <End Role="tech_maps" EntitySet="tech_maps" />
+            <End Role="batches" EntitySet="batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productio__creat__3D7E1B63" Association="Self.FK__productio__creat__3D7E1B63">
+            <End Role="users" EntitySet="users" />
+            <End Role="production_orders" EntitySet="production_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productio__recip__39AD8A7F" Association="Self.FK__productio__recip__39AD8A7F">
+            <End Role="recipes" EntitySet="recipes" />
+            <End Role="production_orders" EntitySet="production_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__quality_c__analy__5B0E7E4A" Association="Self.FK__quality_c__analy__5B0E7E4A">
+            <End Role="users" EntitySet="users" />
+            <End Role="quality_controls" EntitySet="quality_controls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__quality_c__batch__5649C92D" Association="Self.FK__quality_c__batch__5649C92D">
+            <End Role="batches" EntitySet="batches" />
+            <End Role="quality_controls" EntitySet="quality_controls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__quality_c__raw_m__573DED66" Association="Self.FK__quality_c__raw_m__573DED66">
+            <End Role="raw_material_batches" EntitySet="raw_material_batches" />
+            <End Role="quality_controls" EntitySet="quality_controls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__raw_mater__raw_m__4F9CCB9E" Association="Self.FK__raw_mater__raw_m__4F9CCB9E">
+            <End Role="raw_materials" EntitySet="raw_materials" />
+            <End Role="raw_material_batches" EntitySet="raw_material_batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recipe_co__raw_m__269AB60B" Association="Self.FK__recipe_co__raw_m__269AB60B">
+            <End Role="raw_materials" EntitySet="raw_materials" />
+            <End Role="recipe_components" EntitySet="recipe_components" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recipe_co__recip__25A691D2" Association="Self.FK__recipe_co__recip__25A691D2">
+            <End Role="recipes" EntitySet="recipes" />
+            <End Role="recipe_components" EntitySet="recipe_components" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recipes__created__22CA2527" Association="Self.FK__recipes__created__22CA2527">
+            <End Role="users" EntitySet="users" />
+            <End Role="recipes" EntitySet="recipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recipes__product__1EF99443" Association="Self.FK__recipes__product__1EF99443">
+            <End Role="products" EntitySet="products" />
+            <End Role="recipes" EntitySet="recipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tech_map___tech___34E8D562" Association="Self.FK__tech_map___tech___34E8D562">
+            <End Role="tech_maps" EntitySet="tech_maps" />
+            <End Role="tech_map_steps" EntitySet="tech_map_steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tech_maps__creat__320C68B7" Association="Self.FK__tech_maps__creat__320C68B7">
+            <End Role="users" EntitySet="users" />
+            <End Role="tech_maps" EntitySet="tech_maps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tech_maps__produ__2E3BD7D3" Association="Self.FK__tech_maps__produ__2E3BD7D3">
+            <End Role="products" EntitySet="products" />
+            <End Role="tech_maps" EntitySet="tech_maps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__departmen__147C05D0" Association="Self.FK__users__departmen__147C05D0">
+            <End Role="departments" EntitySet="departments" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__role_id__119F9925" Association="Self.FK__users__role_id__119F9925">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PM20_2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="audit_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="table_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="record_id" Type="Int32" Nullable="false" />
+          <Property Name="action" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="old_value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="new_value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="changed_by" Type="Int32" />
+          <Property Name="changed_at" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="users" Relationship="Self.FK__audit_log__chang__5DEAEAF5" FromRole="audit_log" ToRole="users" />
+        </EntityType>
+        <EntityType Name="batch_steps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="batch_id" Type="Int32" Nullable="false" />
+          <Property Name="step_order" Type="Int32" Nullable="false" />
+          <Property Name="step_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="planned_temp_c" Type="Decimal" Precision="5" Scale="1" />
+          <Property Name="actual_temp_c" Type="Decimal" Precision="5" Scale="1" />
+          <Property Name="planned_duration_min" Type="Int32" />
+          <Property Name="actual_duration_min" Type="Int32" />
+          <Property Name="planned_pressure_bar" Type="Decimal" Precision="4" Scale="1" />
+          <Property Name="actual_pressure_bar" Type="Decimal" Precision="4" Scale="1" />
+          <Property Name="started_by" Type="Int32" />
+          <Property Name="completed_by" Type="Int32" />
+          <Property Name="started_at" Type="DateTime" Precision="3" />
+          <Property Name="completed_at" Type="DateTime" Precision="3" />
+          <Property Name="deviation_flag" Type="Boolean" Nullable="false" />
+          <Property Name="operator_comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="batches" Relationship="Self.FK__batch_ste__batch__48EFCE0F" FromRole="batch_steps" ToRole="batches" />
+          <NavigationProperty Name="users" Relationship="Self.FK__batch_ste__compl__4AD81681" FromRole="batch_steps" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.FK__batch_ste__start__49E3F248" FromRole="batch_steps" ToRole="users" />
+        </EntityType>
+        <EntityType Name="batches">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="batch_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="recipe_id" Type="Int32" Nullable="false" />
+          <Property Name="tech_map_id" Type="Int32" Nullable="false" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="end_time" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="actual_quantity_kg" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="batch_steps" Relationship="Self.FK__batch_ste__batch__48EFCE0F" FromRole="batches" ToRole="batch_steps" />
+          <NavigationProperty Name="production_orders" Relationship="Self.FK__batches__order_i__414EAC47" FromRole="batches" ToRole="production_orders" />
+          <NavigationProperty Name="recipes" Relationship="Self.FK__batches__recipe___4242D080" FromRole="batches" ToRole="recipes" />
+          <NavigationProperty Name="tech_maps" Relationship="Self.FK__batches__tech_ma__4336F4B9" FromRole="batches" ToRole="tech_maps" />
+          <NavigationProperty Name="quality_controls" Relationship="Self.FK__quality_c__batch__5649C92D" FromRole="batches" ToRole="quality_controls" />
+        </EntityType>
+        <EntityType Name="departments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK__users__departmen__147C05D0" FromRole="departments" ToRole="users" />
+        </EntityType>
+        <EntityType Name="production_orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="recipe_id" Type="Int32" Nullable="false" />
+          <Property Name="planned_quantity_kg" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="planned_start_date" Type="DateTime" Precision="0" />
+          <Property Name="created_by" Type="Int32" />
+          <NavigationProperty Name="batches" Relationship="Self.FK__batches__order_i__414EAC47" FromRole="production_orders" ToRole="batches" />
+          <NavigationProperty Name="users" Relationship="Self.FK__productio__creat__3D7E1B63" FromRole="production_orders" ToRole="users" />
+          <NavigationProperty Name="recipes" Relationship="Self.FK__productio__recip__39AD8A7F" FromRole="production_orders" ToRole="recipes" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="form" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="recipes" Relationship="Self.FK__recipes__product__1EF99443" FromRole="products" ToRole="recipes" />
+          <NavigationProperty Name="tech_maps" Relationship="Self.FK__tech_maps__produ__2E3BD7D3" FromRole="products" ToRole="tech_maps" />
+        </EntityType>
+        <EntityType Name="quality_controls">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="batch_id" Type="Int32" />
+          <Property Name="raw_material_batch_id" Type="Int32" />
+          <Property Name="analysis_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sample_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="parameter_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="measured_value" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="standard_value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="result" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="decision" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="analyst_id" Type="Int32" />
+          <Property Name="analyst_comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="batches" Relationship="Self.FK__quality_c__batch__5649C92D" FromRole="quality_controls" ToRole="batches" />
+          <NavigationProperty Name="users" Relationship="Self.FK__quality_c__analy__5B0E7E4A" FromRole="quality_controls" ToRole="users" />
+          <NavigationProperty Name="raw_material_batches" Relationship="Self.FK__quality_c__raw_m__573DED66" FromRole="quality_controls" ToRole="raw_material_batches" />
+        </EntityType>
+        <EntityType Name="raw_material_batches">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="raw_material_id" Type="Int32" Nullable="false" />
+          <Property Name="batch_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="supplier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="received_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="quantity" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="quality_controls" Relationship="Self.FK__quality_c__raw_m__573DED66" FromRole="raw_material_batches" ToRole="quality_controls" />
+          <NavigationProperty Name="raw_materials" Relationship="Self.FK__raw_mater__raw_m__4F9CCB9E" FromRole="raw_material_batches" ToRole="raw_materials" />
+        </EntityType>
+        <EntityType Name="raw_materials">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="raw_material_batches" Relationship="Self.FK__raw_mater__raw_m__4F9CCB9E" FromRole="raw_materials" ToRole="raw_material_batches" />
+          <NavigationProperty Name="recipe_components" Relationship="Self.FK__recipe_co__raw_m__269AB60B" FromRole="raw_materials" ToRole="recipe_components" />
+        </EntityType>
+        <EntityType Name="recipe_components">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="recipe_id" Type="Int32" Nullable="false" />
+          <Property Name="raw_material_id" Type="Int32" Nullable="false" />
+          <Property Name="percentage" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="load_order" Type="Int32" Nullable="false" />
+          <Property Name="tolerance_min" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="tolerance_max" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="raw_materials" Relationship="Self.FK__recipe_co__raw_m__269AB60B" FromRole="recipe_components" ToRole="raw_materials" />
+          <NavigationProperty Name="recipes" Relationship="Self.FK__recipe_co__recip__25A691D2" FromRole="recipe_components" ToRole="recipes" />
+        </EntityType>
+        <EntityType Name="recipes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="approved_at" Type="DateTime" Precision="3" />
+          <Property Name="created_by" Type="Int32" />
+          <NavigationProperty Name="batches" Relationship="Self.FK__batches__recipe___4242D080" FromRole="recipes" ToRole="batches" />
+          <NavigationProperty Name="production_orders" Relationship="Self.FK__productio__recip__39AD8A7F" FromRole="recipes" ToRole="production_orders" />
+          <NavigationProperty Name="products" Relationship="Self.FK__recipes__product__1EF99443" FromRole="recipes" ToRole="products" />
+          <NavigationProperty Name="recipe_components" Relationship="Self.FK__recipe_co__recip__25A691D2" FromRole="recipes" ToRole="recipe_components" />
+          <NavigationProperty Name="users" Relationship="Self.FK__recipes__created__22CA2527" FromRole="recipes" ToRole="users" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK__users__role_id__119F9925" FromRole="roles" ToRole="users" />
+        </EntityType>
+        <EntityType Name="tech_map_steps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tech_map_id" Type="Int32" Nullable="false" />
+          <Property Name="step_order" Type="Int32" Nullable="false" />
+          <Property Name="step_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="step_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="planned_temp_c" Type="Decimal" Precision="5" Scale="1" />
+          <Property Name="planned_pressure_bar" Type="Decimal" Precision="4" Scale="1" />
+          <Property Name="planned_duration_min" Type="Int32" />
+          <Property Name="is_mandatory" Type="Boolean" Nullable="false" />
+          <Property Name="instruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tech_maps" Relationship="Self.FK__tech_map___tech___34E8D562" FromRole="tech_map_steps" ToRole="tech_maps" />
+        </EntityType>
+        <EntityType Name="tech_maps">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="created_by" Type="Int32" />
+          <NavigationProperty Name="batches" Relationship="Self.FK__batches__tech_ma__4336F4B9" FromRole="tech_maps" ToRole="batches" />
+          <NavigationProperty Name="products" Relationship="Self.FK__tech_maps__produ__2E3BD7D3" FromRole="tech_maps" ToRole="products" />
+          <NavigationProperty Name="tech_map_steps" Relationship="Self.FK__tech_map___tech___34E8D562" FromRole="tech_maps" ToRole="tech_map_steps" />
+          <NavigationProperty Name="users" Relationship="Self.FK__tech_maps__creat__320C68B7" FromRole="tech_maps" ToRole="users" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="last_login" Type="DateTime" Precision="3" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="department_id" Type="Int32" />
+          <NavigationProperty Name="audit_log" Relationship="Self.FK__audit_log__chang__5DEAEAF5" FromRole="users" ToRole="audit_log" />
+          <NavigationProperty Name="batch_steps" Relationship="Self.FK__batch_ste__compl__4AD81681" FromRole="users" ToRole="batch_steps" />
+          <NavigationProperty Name="batch_steps1" Relationship="Self.FK__batch_ste__start__49E3F248" FromRole="users" ToRole="batch_steps" />
+          <NavigationProperty Name="departments" Relationship="Self.FK__users__departmen__147C05D0" FromRole="users" ToRole="departments" />
+          <NavigationProperty Name="production_orders" Relationship="Self.FK__productio__creat__3D7E1B63" FromRole="users" ToRole="production_orders" />
+          <NavigationProperty Name="quality_controls" Relationship="Self.FK__quality_c__analy__5B0E7E4A" FromRole="users" ToRole="quality_controls" />
+          <NavigationProperty Name="recipes" Relationship="Self.FK__recipes__created__22CA2527" FromRole="users" ToRole="recipes" />
+          <NavigationProperty Name="roles" Relationship="Self.FK__users__role_id__119F9925" FromRole="users" ToRole="roles" />
+          <NavigationProperty Name="tech_maps" Relationship="Self.FK__tech_maps__creat__320C68B7" FromRole="users" ToRole="tech_maps" />
+        </EntityType>
+        <Association Name="FK__audit_log__chang__5DEAEAF5">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="audit_log" Type="Self.audit_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="audit_log">
+              <PropertyRef Name="changed_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batch_ste__batch__48EFCE0F">
+          <End Role="batches" Type="Self.batches" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="batch_steps" Type="Self.batch_steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="batches">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batch_steps">
+              <PropertyRef Name="batch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batch_ste__compl__4AD81681">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="batch_steps" Type="Self.batch_steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batch_steps">
+              <PropertyRef Name="completed_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batch_ste__start__49E3F248">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="batch_steps" Type="Self.batch_steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batch_steps">
+              <PropertyRef Name="started_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batches__order_i__414EAC47">
+          <End Role="production_orders" Type="Self.production_orders" Multiplicity="1" />
+          <End Role="batches" Type="Self.batches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="production_orders">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batches">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batches__recipe___4242D080">
+          <End Role="recipes" Type="Self.recipes" Multiplicity="1" />
+          <End Role="batches" Type="Self.batches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batches">
+              <PropertyRef Name="recipe_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__batches__tech_ma__4336F4B9">
+          <End Role="tech_maps" Type="Self.tech_maps" Multiplicity="1" />
+          <End Role="batches" Type="Self.batches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tech_maps">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="batches">
+              <PropertyRef Name="tech_map_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__quality_c__batch__5649C92D">
+          <End Role="batches" Type="Self.batches" Multiplicity="0..1" />
+          <End Role="quality_controls" Type="Self.quality_controls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="batches">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quality_controls">
+              <PropertyRef Name="batch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__departmen__147C05D0">
+          <End Role="departments" Type="Self.departments" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departments">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productio__creat__3D7E1B63">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="production_orders" Type="Self.production_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="production_orders">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productio__recip__39AD8A7F">
+          <End Role="recipes" Type="Self.recipes" Multiplicity="1" />
+          <End Role="production_orders" Type="Self.production_orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="production_orders">
+              <PropertyRef Name="recipe_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recipes__product__1EF99443">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="recipes" Type="Self.recipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recipes">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tech_maps__produ__2E3BD7D3">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="tech_maps" Type="Self.tech_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tech_maps">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__quality_c__analy__5B0E7E4A">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="quality_controls" Type="Self.quality_controls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quality_controls">
+              <PropertyRef Name="analyst_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__quality_c__raw_m__573DED66">
+          <End Role="raw_material_batches" Type="Self.raw_material_batches" Multiplicity="0..1" />
+          <End Role="quality_controls" Type="Self.quality_controls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="raw_material_batches">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quality_controls">
+              <PropertyRef Name="raw_material_batch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__raw_mater__raw_m__4F9CCB9E">
+          <End Role="raw_materials" Type="Self.raw_materials" Multiplicity="1" />
+          <End Role="raw_material_batches" Type="Self.raw_material_batches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="raw_materials">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="raw_material_batches">
+              <PropertyRef Name="raw_material_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recipe_co__raw_m__269AB60B">
+          <End Role="raw_materials" Type="Self.raw_materials" Multiplicity="1" />
+          <End Role="recipe_components" Type="Self.recipe_components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="raw_materials">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recipe_components">
+              <PropertyRef Name="raw_material_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recipe_co__recip__25A691D2">
+          <End Role="recipes" Type="Self.recipes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="recipe_components" Type="Self.recipe_components" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recipe_components">
+              <PropertyRef Name="recipe_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__recipes__created__22CA2527">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="recipes" Type="Self.recipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="recipes">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__role_id__119F9925">
+          <End Role="roles" Type="Self.roles" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tech_map___tech___34E8D562">
+          <End Role="tech_maps" Type="Self.tech_maps" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tech_map_steps" Type="Self.tech_map_steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tech_maps">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tech_map_steps">
+              <PropertyRef Name="tech_map_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tech_maps__creat__320C68B7">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="tech_maps" Type="Self.tech_maps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tech_maps">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PM20_2Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="audit_log" EntityType="Self.audit_log" />
+          <EntitySet Name="batch_steps" EntityType="Self.batch_steps" />
+          <EntitySet Name="batches" EntityType="Self.batches" />
+          <EntitySet Name="departments" EntityType="Self.departments" />
+          <EntitySet Name="production_orders" EntityType="Self.production_orders" />
+          <EntitySet Name="products" EntityType="Self.products" />
+          <EntitySet Name="quality_controls" EntityType="Self.quality_controls" />
+          <EntitySet Name="raw_material_batches" EntityType="Self.raw_material_batches" />
+          <EntitySet Name="raw_materials" EntityType="Self.raw_materials" />
+          <EntitySet Name="recipe_components" EntityType="Self.recipe_components" />
+          <EntitySet Name="recipes" EntityType="Self.recipes" />
+          <EntitySet Name="roles" EntityType="Self.roles" />
+          <EntitySet Name="tech_map_steps" EntityType="Self.tech_map_steps" />
+          <EntitySet Name="tech_maps" EntityType="Self.tech_maps" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="FK__audit_log__chang__5DEAEAF5" Association="Self.FK__audit_log__chang__5DEAEAF5">
+            <End Role="users" EntitySet="users" />
+            <End Role="audit_log" EntitySet="audit_log" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batch_ste__batch__48EFCE0F" Association="Self.FK__batch_ste__batch__48EFCE0F">
+            <End Role="batches" EntitySet="batches" />
+            <End Role="batch_steps" EntitySet="batch_steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batch_ste__compl__4AD81681" Association="Self.FK__batch_ste__compl__4AD81681">
+            <End Role="users" EntitySet="users" />
+            <End Role="batch_steps" EntitySet="batch_steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batch_ste__start__49E3F248" Association="Self.FK__batch_ste__start__49E3F248">
+            <End Role="users" EntitySet="users" />
+            <End Role="batch_steps" EntitySet="batch_steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batches__order_i__414EAC47" Association="Self.FK__batches__order_i__414EAC47">
+            <End Role="production_orders" EntitySet="production_orders" />
+            <End Role="batches" EntitySet="batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batches__recipe___4242D080" Association="Self.FK__batches__recipe___4242D080">
+            <End Role="recipes" EntitySet="recipes" />
+            <End Role="batches" EntitySet="batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__batches__tech_ma__4336F4B9" Association="Self.FK__batches__tech_ma__4336F4B9">
+            <End Role="tech_maps" EntitySet="tech_maps" />
+            <End Role="batches" EntitySet="batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__quality_c__batch__5649C92D" Association="Self.FK__quality_c__batch__5649C92D">
+            <End Role="batches" EntitySet="batches" />
+            <End Role="quality_controls" EntitySet="quality_controls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__departmen__147C05D0" Association="Self.FK__users__departmen__147C05D0">
+            <End Role="departments" EntitySet="departments" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productio__creat__3D7E1B63" Association="Self.FK__productio__creat__3D7E1B63">
+            <End Role="users" EntitySet="users" />
+            <End Role="production_orders" EntitySet="production_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productio__recip__39AD8A7F" Association="Self.FK__productio__recip__39AD8A7F">
+            <End Role="recipes" EntitySet="recipes" />
+            <End Role="production_orders" EntitySet="production_orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recipes__product__1EF99443" Association="Self.FK__recipes__product__1EF99443">
+            <End Role="products" EntitySet="products" />
+            <End Role="recipes" EntitySet="recipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tech_maps__produ__2E3BD7D3" Association="Self.FK__tech_maps__produ__2E3BD7D3">
+            <End Role="products" EntitySet="products" />
+            <End Role="tech_maps" EntitySet="tech_maps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__quality_c__analy__5B0E7E4A" Association="Self.FK__quality_c__analy__5B0E7E4A">
+            <End Role="users" EntitySet="users" />
+            <End Role="quality_controls" EntitySet="quality_controls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__quality_c__raw_m__573DED66" Association="Self.FK__quality_c__raw_m__573DED66">
+            <End Role="raw_material_batches" EntitySet="raw_material_batches" />
+            <End Role="quality_controls" EntitySet="quality_controls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__raw_mater__raw_m__4F9CCB9E" Association="Self.FK__raw_mater__raw_m__4F9CCB9E">
+            <End Role="raw_materials" EntitySet="raw_materials" />
+            <End Role="raw_material_batches" EntitySet="raw_material_batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recipe_co__raw_m__269AB60B" Association="Self.FK__recipe_co__raw_m__269AB60B">
+            <End Role="raw_materials" EntitySet="raw_materials" />
+            <End Role="recipe_components" EntitySet="recipe_components" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recipe_co__recip__25A691D2" Association="Self.FK__recipe_co__recip__25A691D2">
+            <End Role="recipes" EntitySet="recipes" />
+            <End Role="recipe_components" EntitySet="recipe_components" />
+          </AssociationSet>
+          <AssociationSet Name="FK__recipes__created__22CA2527" Association="Self.FK__recipes__created__22CA2527">
+            <End Role="users" EntitySet="users" />
+            <End Role="recipes" EntitySet="recipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__users__role_id__119F9925" Association="Self.FK__users__role_id__119F9925">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tech_map___tech___34E8D562" Association="Self.FK__tech_map___tech___34E8D562">
+            <End Role="tech_maps" EntitySet="tech_maps" />
+            <End Role="tech_map_steps" EntitySet="tech_map_steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tech_maps__creat__320C68B7" Association="Self.FK__tech_maps__creat__320C68B7">
+            <End Role="users" EntitySet="users" />
+            <End Role="tech_maps" EntitySet="tech_maps" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PM20_2ModelContainer" CdmEntityContainer="PM20_2Entities1">
+          <EntitySetMapping Name="audit_log">
+            <EntityTypeMapping TypeName="PM20_2Model.audit_log">
+              <MappingFragment StoreEntitySet="audit_log">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="table_name" ColumnName="table_name" />
+                <ScalarProperty Name="record_id" ColumnName="record_id" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="old_value" ColumnName="old_value" />
+                <ScalarProperty Name="new_value" ColumnName="new_value" />
+                <ScalarProperty Name="changed_by" ColumnName="changed_by" />
+                <ScalarProperty Name="changed_at" ColumnName="changed_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="batch_steps">
+            <EntityTypeMapping TypeName="PM20_2Model.batch_steps">
+              <MappingFragment StoreEntitySet="batch_steps">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="batch_id" ColumnName="batch_id" />
+                <ScalarProperty Name="step_order" ColumnName="step_order" />
+                <ScalarProperty Name="step_name" ColumnName="step_name" />
+                <ScalarProperty Name="planned_temp_c" ColumnName="planned_temp_c" />
+                <ScalarProperty Name="actual_temp_c" ColumnName="actual_temp_c" />
+                <ScalarProperty Name="planned_duration_min" ColumnName="planned_duration_min" />
+                <ScalarProperty Name="actual_duration_min" ColumnName="actual_duration_min" />
+                <ScalarProperty Name="planned_pressure_bar" ColumnName="planned_pressure_bar" />
+                <ScalarProperty Name="actual_pressure_bar" ColumnName="actual_pressure_bar" />
+                <ScalarProperty Name="started_by" ColumnName="started_by" />
+                <ScalarProperty Name="completed_by" ColumnName="completed_by" />
+                <ScalarProperty Name="started_at" ColumnName="started_at" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="deviation_flag" ColumnName="deviation_flag" />
+                <ScalarProperty Name="operator_comment" ColumnName="operator_comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="batches">
+            <EntityTypeMapping TypeName="PM20_2Model.batches">
+              <MappingFragment StoreEntitySet="batches">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="batch_number" ColumnName="batch_number" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="recipe_id" ColumnName="recipe_id" />
+                <ScalarProperty Name="tech_map_id" ColumnName="tech_map_id" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="actual_quantity_kg" ColumnName="actual_quantity_kg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="PM20_2Model.departments">
+              <MappingFragment StoreEntitySet="departments">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="production_orders">
+            <EntityTypeMapping TypeName="PM20_2Model.production_orders">
+              <MappingFragment StoreEntitySet="production_orders">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="order_number" ColumnName="order_number" />
+                <ScalarProperty Name="recipe_id" ColumnName="recipe_id" />
+                <ScalarProperty Name="planned_quantity_kg" ColumnName="planned_quantity_kg" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="planned_start_date" ColumnName="planned_start_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="PM20_2Model.products">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="form" ColumnName="form" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="quality_controls">
+            <EntityTypeMapping TypeName="PM20_2Model.quality_controls">
+              <MappingFragment StoreEntitySet="quality_controls">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="batch_id" ColumnName="batch_id" />
+                <ScalarProperty Name="raw_material_batch_id" ColumnName="raw_material_batch_id" />
+                <ScalarProperty Name="analysis_date" ColumnName="analysis_date" />
+                <ScalarProperty Name="sample_type" ColumnName="sample_type" />
+                <ScalarProperty Name="parameter_name" ColumnName="parameter_name" />
+                <ScalarProperty Name="measured_value" ColumnName="measured_value" />
+                <ScalarProperty Name="standard_value" ColumnName="standard_value" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="decision" ColumnName="decision" />
+                <ScalarProperty Name="analyst_id" ColumnName="analyst_id" />
+                <ScalarProperty Name="analyst_comment" ColumnName="analyst_comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="raw_material_batches">
+            <EntityTypeMapping TypeName="PM20_2Model.raw_material_batches">
+              <MappingFragment StoreEntitySet="raw_material_batches">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="raw_material_id" ColumnName="raw_material_id" />
+                <ScalarProperty Name="batch_number" ColumnName="batch_number" />
+                <ScalarProperty Name="supplier" ColumnName="supplier" />
+                <ScalarProperty Name="received_date" ColumnName="received_date" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="raw_materials">
+            <EntityTypeMapping TypeName="PM20_2Model.raw_materials">
+              <MappingFragment StoreEntitySet="raw_materials">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="unit" ColumnName="unit" />
+                <ScalarProperty Name="category" ColumnName="category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recipe_components">
+            <EntityTypeMapping TypeName="PM20_2Model.recipe_components">
+              <MappingFragment StoreEntitySet="recipe_components">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="recipe_id" ColumnName="recipe_id" />
+                <ScalarProperty Name="raw_material_id" ColumnName="raw_material_id" />
+                <ScalarProperty Name="percentage" ColumnName="percentage" />
+                <ScalarProperty Name="load_order" ColumnName="load_order" />
+                <ScalarProperty Name="tolerance_min" ColumnName="tolerance_min" />
+                <ScalarProperty Name="tolerance_max" ColumnName="tolerance_max" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recipes">
+            <EntityTypeMapping TypeName="PM20_2Model.recipes">
+              <MappingFragment StoreEntitySet="recipes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="approved_at" ColumnName="approved_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="PM20_2Model.roles">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tech_map_steps">
+            <EntityTypeMapping TypeName="PM20_2Model.tech_map_steps">
+              <MappingFragment StoreEntitySet="tech_map_steps">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tech_map_id" ColumnName="tech_map_id" />
+                <ScalarProperty Name="step_order" ColumnName="step_order" />
+                <ScalarProperty Name="step_name" ColumnName="step_name" />
+                <ScalarProperty Name="step_type" ColumnName="step_type" />
+                <ScalarProperty Name="planned_temp_c" ColumnName="planned_temp_c" />
+                <ScalarProperty Name="planned_pressure_bar" ColumnName="planned_pressure_bar" />
+                <ScalarProperty Name="planned_duration_min" ColumnName="planned_duration_min" />
+                <ScalarProperty Name="is_mandatory" ColumnName="is_mandatory" />
+                <ScalarProperty Name="instruction" ColumnName="instruction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tech_maps">
+            <EntityTypeMapping TypeName="PM20_2Model.tech_maps">
+              <MappingFragment StoreEntitySet="tech_maps">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="PM20_2Model.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="last_login" ColumnName="last_login" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

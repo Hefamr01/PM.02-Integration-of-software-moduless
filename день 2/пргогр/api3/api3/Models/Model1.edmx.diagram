@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="290ff8e656f74619b1195a1efc6540f6" Name="Diagram1" ZoomLevel="50">
+        <EntityTypeShape EntityType="PM20_2Model.audit_log" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.batch_steps" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.batches" Width="1.5" PointX="10.5" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.departments" Width="1.5" PointX="0.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.production_orders" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.products" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.quality_controls" Width="1.5" PointX="12.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.raw_material_batches" Width="1.5" PointX="10.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.raw_materials" Width="1.5" PointX="8.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.recipe_components" Width="1.5" PointX="7.5" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.recipes" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.roles" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.tech_map_steps" Width="1.5" PointX="10.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.tech_maps" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PM20_2Model.users" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <AssociationConnector Association="PM20_2Model.FK__audit_log__chang__5DEAEAF5" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__batch_ste__batch__48EFCE0F" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__batch_ste__compl__4AD81681" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__batch_ste__start__49E3F248" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__batches__order_i__414EAC47" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__batches__recipe___4242D080" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__batches__tech_ma__4336F4B9" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__quality_c__batch__5649C92D" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__users__departmen__147C05D0" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__productio__creat__3D7E1B63" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__productio__recip__39AD8A7F" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__recipes__product__1EF99443" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__tech_maps__produ__2E3BD7D3" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__quality_c__analy__5B0E7E4A" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__quality_c__raw_m__573DED66" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__raw_mater__raw_m__4F9CCB9E" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__recipe_co__raw_m__269AB60B" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__recipe_co__recip__25A691D2" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__recipes__created__22CA2527" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__users__role_id__119F9925" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__tech_map___tech___34E8D562" ManuallyRouted="false" />
+        <AssociationConnector Association="PM20_2Model.FK__tech_maps__creat__320C68B7" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

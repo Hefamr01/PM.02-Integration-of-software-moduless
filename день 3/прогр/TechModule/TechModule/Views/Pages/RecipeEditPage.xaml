@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="TechModule.Views.Pages.RecipeEditPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Редактирование рецепта">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Основные параметры">
+            <StackPanel>
+                <TextBlock Text="ID продукта:" />
+                <TextBox Text="{Binding Recipe.product_id}" />
+                <TextBlock Text="Версия:" />
+                <TextBox Text="{Binding Recipe.version}" />
+                <TextBlock Text="Статус:" />
+                <TextBox IsReadOnly="True" Text="{Binding Recipe.status}" />
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Row="1"
+            Margin="0,10"
+            Header="Компоненты">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <DataGrid
+                    Grid.Column="0"
+                    AutoGenerateColumns="True"
+                    ItemsSource="{Binding Components}"
+                    SelectedItem="{Binding SelectedComponent}" />
+                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                    <Button
+                        Width="100"
+                        Margin="0,5"
+                        Command="{Binding AddComponentCommand}"
+                        Content="Добавить" />
+                    <Button
+                        Width="100"
+                        Margin="0,5"
+                        Command="{Binding RemoveComponentCommand}"
+                        Content="Удалить" />
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Header="Добавить компонент">
+            <StackPanel>
+                <TextBlock Text="Сырьё:" />
+                <ComboBox
+                    DisplayMemberPath="name"
+                    ItemsSource="{Binding RawMaterials}"
+                    SelectedValue="{Binding SelectedRawMaterialId}"
+                    SelectedValuePath="id" />
+                <TextBlock Text="Процент (%)" />
+                <TextBox Text="{Binding Percentage}" />
+                <TextBlock Text="Порядок загрузки" />
+                <TextBox Text="{Binding LoadOrder}" />
+                <TextBlock Text="Допуск min" />
+                <TextBox Text="{Binding ToleranceMin}" />
+                <TextBlock Text="Допуск max" />
+                <TextBox Text="{Binding ToleranceMax}" />
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel
+            Grid.Row="3"
+            Margin="0,10"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Width="100"
+                Margin="5"
+                Command="{Binding SaveCommand}"
+                Content="Сохранить" />
+            <Button
+                Width="100"
+                Margin="5"
+                Click="Cancel_Click"
+                Content="Отмена" />
+        </StackPanel>
+        <TextBlock
+            Grid.Row="3"
+            Margin="5"
+            VerticalAlignment="Center"
+            Foreground="Red"
+            Text="{Binding Error}" />
+    </Grid>
+</Page>

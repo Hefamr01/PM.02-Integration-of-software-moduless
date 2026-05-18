@@ -1,0 +1,21 @@
+﻿<Page x:Class="LabModule.Views.Pages.RawMaterialBatchesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Партии сырья">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <DataGrid AutoGenerateColumns="True" IsReadOnly="True"
+                  ItemsSource="{Binding Batches}" SelectedItem="{Binding SelectedBatch}" />
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,10,0,0">
+            <Button Width="120" Margin="5" Command="{Binding StartAnalysisCommand}" Content="Начать анализ" />
+            <Button Width="120" Margin="5" Command="{Binding AddQualityControlCommand}" Content="Добавить контроль" />
+            <Button Width="100" Margin="5" Command="{Binding ApproveCommand}" Content="Одобрить" />
+            <Button Width="100" Margin="5" Command="{Binding BlockCommand}" Content="Забраковать" />
+            <Button Width="150" Margin="5" Command="{Binding ViewControlsCommand}" Content="Просмотр контролей" />
+            <Button Width="120" Margin="5" Click="GenerateProtocol_Click" Content="Протокол" />
+        </StackPanel>
+    </Grid>
+</Page>

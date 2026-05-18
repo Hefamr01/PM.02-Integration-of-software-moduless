@@ -1,0 +1,85 @@
+﻿<!--  Views/Pages/ProductionOrderEditPage.xaml  -->
+<Page
+    x:Class="TechModule.Views.Pages.ProductionOrderEditPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Редактирование заказа">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="0,5" Text="Номер заказа:" />
+        <TextBox
+            Grid.Row="1"
+            Margin="0,0,0,10"
+            Text="{Binding Order.order_number}" />
+
+        <TextBlock
+            Grid.Row="2"
+            Margin="0,5"
+            Text="Рецептура:" />
+        <ComboBox
+            Grid.Row="3"
+            Margin="0,0,0,10"
+            DisplayMemberPath="id"
+            ItemsSource="{Binding Recipes}"
+            SelectedItem="{Binding SelectedRecipe}" />
+
+        <TextBlock
+            Grid.Row="4"
+            Margin="0,5"
+            Text="Плановое количество (кг):" />
+        <TextBox
+            Grid.Row="5"
+            Margin="0,0,0,10"
+            Text="{Binding Order.planned_quantity_kg}" />
+
+        <TextBlock
+            Grid.Row="6"
+            Margin="0,5"
+            Text="Плановая дата начала:" />
+        <DatePicker
+            Grid.Row="7"
+            Margin="0,0,0,10"
+            SelectedDate="{Binding Order.planned_start_date}" />
+
+        <TextBlock
+            Grid.Row="8"
+            Margin="0,5"
+            Text="Статус:" />
+        <TextBox
+            Grid.Row="9"
+            Margin="0,0,0,10"
+            IsReadOnly="True"
+            Text="{Binding Order.status}" />
+
+        <StackPanel
+            Grid.Row="10"
+            Margin="0,10"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Width="100"
+                Margin="5"
+                Command="{Binding SaveCommand}"
+                Content="Сохранить" />
+            <Button
+                Width="100"
+                Margin="5"
+                Click="Cancel_Click"
+                Content="Отмена" />
+        </StackPanel>
+        <TextBlock
+            Grid.Row="10"
+            Margin="5"
+            VerticalAlignment="Center"
+            Foreground="Red"
+            Text="{Binding Error}" />
+    </Grid>
+</Page>

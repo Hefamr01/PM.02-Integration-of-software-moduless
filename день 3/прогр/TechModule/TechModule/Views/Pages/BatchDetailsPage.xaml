@@ -1,0 +1,53 @@
+﻿<!--  Views/Pages/BatchDetailsPage.xaml  -->
+<Page
+    x:Class="TechModule.Views.Pages.BatchDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Детали партии">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Margin="0,0,0,10" Header="Информация о партии">
+            <StackPanel>
+                <TextBlock Text="{Binding Batch.batch_number, StringFormat='Номер: {0}'}" />
+                <TextBlock Text="{Binding Batch.status, StringFormat='Статус: {0}'}" />
+                <TextBlock Text="{Binding Batch.start_time, StringFormat='Начало: {0}'}" />
+                <TextBlock Text="{Binding Batch.end_time, StringFormat='Окончание: {0}'}" />
+                <TextBlock Text="{Binding Batch.actual_quantity_kg, StringFormat='Факт. кол-во: {0} кг'}" />
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Header="Шаги производства">
+            <DataGrid
+                AutoGenerateColumns="True"
+                IsReadOnly="True"
+                ItemsSource="{Binding Steps}"
+                SelectedItem="{Binding SelectedStep}">
+                <DataGrid.Columns>
+                    <!--  Дополнительная настройка колонок по желанию  -->
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+        <StackPanel
+            Grid.Row="1"
+            Margin="0,0,10,10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal">
+            <Button
+                Width="100"
+                Margin="5"
+                Command="{Binding StartStepCommand}"
+                Content="Старт шага" />
+            <Button
+                Width="100"
+                Margin="5"
+                Command="{Binding FinishStepCommand}"
+                Content="Завершить шаг" />
+        </StackPanel>
+    </Grid>
+</Page>
